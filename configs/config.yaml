@@ -1,0 +1,32 @@
+# Predictive Maintenance Configuration
+
+data:
+  sample_rate: 1000
+  window_size: 50
+  stride: 10
+  
+features:
+  time_domain:
+    - mean
+    - std
+    - rms
+    - peak
+    - crest_factor
+    - kurtosis
+    - skewness
+    
+models:
+  classification:
+    random_forest:
+      n_estimators: 100
+      max_depth: 10
+      
+    xgboost:
+      n_estimators: 100
+      learning_rate: 0.1
+      
+thresholds:
+  vibration_rms: 2.0
+  temperature: 75
+  health_index_critical: 50
+  health_index_warning: 70
