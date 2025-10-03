@@ -1,0 +1,164 @@
+# Smart Alert System Configuration
+
+# Alert Rules Configuration
+alert_rules:
+  - type: health_degradation
+    severity: warning
+    threshold: 70.0
+    condition: less_than
+    message_template: "Equipment {equipment_id} health index dropped to {value}%"
+    escalation_minutes: 60
+    enabled: true
+
+  - type: rul_threshold
+    severity: critical
+    threshold: 24.0
+    condition: less_than
+    message_template: "Equipment {equipment_id} RUL is only {value} hours"
+    escalation_minutes: 30
+    enabled: true
+
+  - type: vibration_spike
+    severity: warning
+    threshold: 3.0
+    condition: greater_than
+    message_template: "High vibration detected on {equipment_id}: {value} mm/s"
+    escalation_minutes: 45
+    enabled: true
+
+  - type: temperature_high
+    severity: critical
+    threshold: 80.0
+    condition: greater_than
+    message_template: "High temperature on {equipment_id}: {value}°C"
+    escalation_minutes: 15
+    enabled: true
+
+  - type: pressure_anomaly
+    severity: warning
+    threshold: 6.0
+    condition: greater_than
+    message_template: "Pressure anomaly on {equipment_id}: {value} bar"
+    escalation_minutes: 60
+    enabled: true
+
+  - type: current_anomaly
+    severity: warning
+    threshold: 70.0
+    condition: greater_than
+    message_template: "High current consumption on {equipment_id}: {value} A"
+    escalation_minutes: 45
+    enabled: true
+
+  - type: sensor_failure
+    severity: critical
+    threshold: 0.0
+    condition: equals
+    message_template: "Sensor failure detected on {equipment_id}"
+    escalation_minutes: 5
+    enabled: true
+
+  - type: maintenance_due
+    severity: info
+    threshold: 48.0
+    condition: less_than
+    message_template: "Maintenance due for {equipment_id} in {value} hours"
+    escalation_minutes: 1440  # 24 hours
+    enabled: true
+
+# Escalation Rules - defines which channels to use for each severity
+escalation_rules:
+  info:
+    - email
+    - dashboard
+  
+  warning:
+    - email
+    - dashboard
+    - slack
+  
+  critical:
+    - email
+    - sms
+    - dashboard
+    - slack
+  
+  emergency:
+    - email
+    - sms
+    - dashboard
+    - slack
+    - phone_call
+
+# Notification Channels Configuration
+notification_channels:
+  email:
+    enabled: true
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    username: "your-email@gmail.com"
+    password: "your-app-password"
+    from_email: "alerts@yourcompany.com"
+    use_tls: true
+
+  sms:
+    enabled: true
+    provider: twilio
+    account_sid: "YOUR_TWILIO_ACCOUNT_SID"
+    auth_token: "YOUR_TWILIO_AUTH_TOKEN"
+    from_number: "YOUR_TWILIO_PHONE_NUMBER"
+
+  slack:
+    enabled: false
+    webhook_url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+    channel: "#alerts"
+    username: "Predictive Maintenance Bot"
+
+  dashboard:
+    enabled: true
+    max_alerts: 100
+    retention_days: 30
+    auto_refresh: true
+
+# Alert Throttling Configuration
+throttling:
+  enabled: true
+  window_minutes: 5
+  max_alerts_per_window: 3
+
+# Alert Recipients
+recipients:
+  email:
+    - "maintenance@yourcompany.com"
+    - "operations@yourcompany.com"
+    - "manager@yourcompany.com"
+  
+  sms:
+    - "+1234567890"   # Add your phone numbers here
+    - "+0987654321"   # Add more recipients as needed
+  
+  slack:
+    - "#maintenance-team"
+    - "#operations-team"
+
+# Database Configuration
+database:
+  path: "data/alert_history.db"
+  cleanup_days: 90
+  backup_enabled: true
+  backup_frequency: "daily"
+
+# Monitoring Configuration
+monitoring:
+  enabled: true
+  check_interval_seconds: 60
+  batch_size: 10
+  timeout_seconds: 30
+
+# Logging Configuration
+logging:
+  level: INFO
+  file: "logs/alert_system.log"
+  max_size_mb: 100
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

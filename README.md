@@ -28,6 +28,13 @@ This system is specifically designed for **pumps and compressors** used in chemi
 - **RUL Prediction**: Remaining Useful Life estimation in hours
 - **Trend Analysis**: Historical data visualization and pattern recognition
 
+### 🚨 **Smart Alert System**
+- **Multi-Channel Notifications**: SMS, Email, and Dashboard alerts
+- **Intelligent Escalation**: Automatic escalation based on severity
+- **International SMS**: Global SMS delivery via Twilio
+- **Alert History**: Complete audit trail of all notifications
+- **Configurable Rules**: Customizable alert thresholds and recipients
+
 ### 🎛️ **Advanced Analytics**
 - **Multi-Sensor Fusion**: Combines vibration, temperature, pressure, and current data
 - **Feature Engineering**: 11+ time-domain features (RMS, peak, kurtosis, skewness, etc.)
@@ -68,6 +75,16 @@ This system is specifically designed for **pumps and compressors** used in chemi
    python demo.py
    ```
 
+6. **Test SMS alerts**
+   ```bash
+   python test_sms_friend_9044235343.py
+   ```
+
+7. **Run presentation demo**
+   ```bash
+   python live_demo.py
+   ```
+
 ### **Access the Dashboard**
 Open your browser and go to: **http://localhost:8501**
 
@@ -106,6 +123,9 @@ predictive-maintenance/
 │   ├── feature_extraction.py # Signal processing features
 │   ├── models.py            # ML model definitions
 │   ├── preprocessing.py     # Data preprocessing
+│   ├── alert_manager.py     # Smart alert system
+│   ├── sms_service.py       # SMS notifications
+│   ├── email_service.py     # Email notifications
 │   └── utils.py            # Utility functions
 ├── 📁 dashboard/             # Streamlit web interface
 │   ├── app.py              # Main dashboard
